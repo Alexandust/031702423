@@ -144,7 +144,7 @@ def main():
     data2 = data2.replace(road, "", 1)
     re.road=road
 
-    number=getnumber(data)
+    number=getnumber(data2)
     data2 = data2.replace(number, "", 1)
     re.number=number
     re.information=data2
