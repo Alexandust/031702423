@@ -12,69 +12,69 @@ class resolution:
     phone=""
     detail=""
     information=""
-def phonenumber(data):
-    pn0=re.search(r'\d{7,12}',data)
+def phonenumber(d):
+    pn0=re.search(r'\d{7,12}',d)
     if pn0 == None:
         return ""
     return pn0.group(0)
-def level(data):
-    l=data.split("!")
+def level(d):
+    l=d.split("!")
     return l
-def getname(data):
-    n=data.split(",")
+def getname(d):
+    n=d.split(",")
     return n
 
-def getpalityandprovince(data): #判断直辖市
-    name=re.search(("(.*?省)|(.*?自治区)|(.*?北京市)|(.*?上海市)|(.*?天津市)|(.*?重庆市)"), data)
+def getpalityandprovince(d): #判断直辖市
+    name=re.search(("(.*?省)|(.*?自治区)|(.*?北京市)|(.*?上海市)|(.*?天津市)|(.*?重庆市)"), d)
     if name != None:
         l = len(name.group(0))
     if name == None or l > 5:
-        if data[0:3] == "新疆维吾尔":
+        if d[0:3] == "新疆维吾尔":
             return "新疆维吾尔"
-        if data[0:3] == "内蒙古":
+        if d[0:3] == "内蒙古":
             return "内蒙古"
-        if data[0:3] == "广西壮族":
+        if d[0:3] == "广西壮族":
             return "广西壮族"
-        if data[0:3] == "内蒙古":
+        if d[0:3] == "内蒙古":
             return "内蒙古"
         else:
-            return data[0:2]
+            return d[0:2]
     return name.group(0)
-def getcity(data):   #从信息中读取城市名
-    cityname = re.search("(.*?[市])", data)
+def getcity(d):   #从信息中读取城市名
+    cityname = re.search("(.*?[市])", d)
     if cityname != None:
         l = len(cityname.group(0))
     if cityname == None or l > 7:
         for x in infor:
-            if data[0:2] in x:
+            if d[0:2] in x:
                 return x
         return ""
     return cityname.group(0)
 
-def getarea(data):            #从信息中读取县、区名
-    areaname = re.search("(.*?[县])|(.*?[区])", data)
+def getarea(d):            #从信息中读取县、区名
+    areaname = re.search("(.*?[县])|(.*?[区])", d)
     if areaname == None:
         #print("_____________________")
         for i in infor:
-            if data[0:2] in i:
+            if d[0:2] in i:
                 return i
         return ""
     return areaname.group(0)
 
-def gettown(data):         #从信息中读取镇、乡名
-    tname = re.search("(.*?镇|乡|街道),", data)
+def gettown(d):         #从信息中读取镇、乡名
+    tname = re.search("(.*?镇|乡|街道),", d)
     if tname == None:
         return ""
     return tname.group(0)
 
-def getroad(data): #从信息中读取街、道、路名
-    roadname = re.search("(.*?路|街|道|巷)", data)
+def getroad(d): #从信息中读取街、道、路名
+    roadname = re.search("(.*?路|街|道|巷)", d)
     if roadname == None:
         return ""
     return roadname.group(0)
 
-def getnumber(data):                #从信息中读取住户门牌号
-    dnumber = re.search("(.*?[号])", data)
+def getnumber(d):                #从信息中读取住户门牌号
+    dnumber = re.search("(.*?[号])", d)
     if dnumber == None:
         return ""
     return dnumber.group(0)
@@ -89,19 +89,25 @@ def main():
     }
     re = resolution()
     data=input()
-    datajudge=data[0]
+    lev=level(data)
+    data=lev[1] #更新为分割出难度的数据,即真数据
     data1=getname(data)
-    data2=data1[1]
-
     name1=data1[0]
     re.name=name1
     something["姓名"]=re.name
-    phone=phonenumber(data2)
+    phone=phonenumber(data)
     re.phone=phone
     something["手机"] = re.phone
+    datajudge=data[0]
+    data2=data1[1]
+    data2 = data2.replace(re.phone, "", 1)
+    data2 = data2.replace(".", "", 1)
     province=getpalityandprovince(data2)
-    if province in ('北京市', '上海市', '天津市', '重庆市'):#直辖市的话直接跳过市级和县级
+    if   province in ('北京市', '上海市', '天津市', '重庆市'):#直辖市的话直接跳过市级和县级
         province = province[0:2]
+    elif province in ('北京', '上海', '天津', '重庆'):
+        province = province
+        data2 = data2.replace(province, province + "市", 1)
     elif province == "广西":
         data2 = data2.replace(province, "", 1)
         province = province + "壮族自治区"
@@ -124,8 +130,6 @@ def main():
     if city != "":
         data2 = data2.replace(city, "", 1)
         if city[-1] != "市":
-            city = city + "市"
-        elif city[-3:-1] != "自治":
             city = city + "市"
     re.city=city
     area=getarea(data2)
