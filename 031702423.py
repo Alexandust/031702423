@@ -146,7 +146,8 @@ def main():
     number=getnumber(data)
     data2 = data2.replace(number, "", 1)
     re.number=number
-    re.information=data2
+    data3=data2.split("号")
+    re.information=data3[1]
     if datajudge =="1":
         something["地址"] = [re.province, re.city, re.area, re.town, re.detail]
     else:
