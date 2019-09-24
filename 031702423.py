@@ -97,7 +97,7 @@ def main():
     phone=phonenumber(data)
     re.phone=phone
     something["手机"] = re.phone
-    datajudge=lev[0]
+    datajudge=lev[0] #把分割出的难度系数当作输出评判标准
     data2=data1[1]
     data2 = data2.replace(re.phone, "", 1)
     data2 = data2.replace(".", "", 1)
@@ -148,7 +148,7 @@ def main():
     data2 = data2.replace(number, "", 1)
     re.number=number
     re.information=data2
-    if datajudge =="1":
+    if datajudge =="1":#难度系数为1，输出到乡镇，剩下的当细节放到最后一个；否则的话，一路细分到门牌号
         something["地址"] = [re.province, re.city, re.area, re.town, re.detail]
     else:
         something["地址"] = [re.province, re.city, re.area, re.town, re.road, re.number, re.information]
