@@ -10,6 +10,8 @@ class resolution:
     number=""
     name=""
     phone=""
+    detail=""
+    information=""
 def level(data):
     l=data.split("!")
     return l
@@ -20,6 +22,8 @@ def phonenumber(data):
     way=re.compile(r'\d{7,12}')
     pn0=way.search(data)
     pn=pn0.group(0)
+    if pn0 == None:
+        return ""
     return pn
 def getpalityandprovince(data): #判断直辖市
     name=re.search(("(.*?省)|(.*?自治区)|(.*?北京市)|(.*?上海市)|(.*?天津市)|(.*?重庆市)"), data)
@@ -96,6 +100,7 @@ def main():
     phone=phonenumber(data)
     re.phone=phone
     something["手机"] = re.phone
+    datajudge=data[0]
     data1=getname(data)
     data2=data1[1]
     province=getpalityandprovince(data2)
@@ -138,12 +143,18 @@ def main():
     town=gettown(data2)
     data2 = data2.replace(town, "", 1)
     re.town=town
+    datadetail=data2
+    re.detail=datadetail
     road=getroad(data2)
     data2 = data2.replace(road, "", 1)
     number=getnumber(data)
     data2 = data2.replace(number, "", 1)
     re.number=number
-    something["地址"] = [re.province, re.city, re.area, re.town, re.road, re.number]
+    re.information=data2
+    if datajudge =="1":
+        something["地址"] = [re.province, re.city, re.area, re.town, re.detail]
+    else:
+        something["地址"] = [re.province, re.city, re.area, re.town, re.road, re.number, re.information]
     json_str = json.dumps(something, ensure_ascii=False)
     print(json_str)
 main()
