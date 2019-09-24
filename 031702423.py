@@ -52,9 +52,8 @@ def getcity(d):   #从信息中读取城市名
     return cityname.group(0)
 
 def getarea(d):            #从信息中读取县、区名
-    areaname = re.search("(.*?县)|(.*?区)", d)
+    areaname = re.search("(.*?[县])|(.*?[区])", d)
     if areaname == None:
-        #print("_____________________")
         for i in infor:
             if d[0:2] in i:
                 return i
@@ -62,19 +61,19 @@ def getarea(d):            #从信息中读取县、区名
     return areaname.group(0)
 
 def gettown(d):         #从信息中读取镇、乡名
-    tname = re.search("(.*?镇)|(.*?乡)|(.*?街道)", d)
+    tname = re.search("(.*?[镇])|(.*?[乡])|(.*?街道)", d)
     if tname == None:
         return ""
     return tname.group(0)
 
 def getroad(d): #从信息中读取街、道、路名
-    roadname = re.search("(.*?路|街|道|巷)", d)
+    roadname = re.search("(.*?[街])|(.*?[道])|(.*?[路])|(.*?[巷])|(.*?[大街])|(.*?[街道])", d)
     if roadname == None:
         return ""
     return roadname.group(0)
 
 def getnumber(d):                #从信息中读取住户门牌号
-    dnumber = re.search("(.*?号)", d)
+    dnumber = re.search("(.*?[号])", d)
     if dnumber == None:
         return ""
     return dnumber.group(0)
@@ -133,8 +132,9 @@ def main():
             city = city + "市"
     re.city=city
     area=getarea(data2)
-
+    data2=data2.replace(area,"", 1)
     re.area=area
+
     town=gettown(data2)
     data2 = data2.replace(town, "", 1)
     re.town=town
@@ -142,6 +142,7 @@ def main():
 
     road=getroad(data2)
     data2 = data2.replace(road, "", 1)
+    re.road=road
 
     number=getnumber(data)
     data2 = data2.replace(number, "", 1)
