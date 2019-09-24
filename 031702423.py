@@ -97,7 +97,7 @@ def main():
     phone=phonenumber(data)
     re.phone=phone
     something["手机"] = re.phone
-    datajudge=data[0]
+    datajudge=lev[0]
     data2=data1[1]
     data2 = data2.replace(re.phone, "", 1)
     data2 = data2.replace(".", "", 1)
