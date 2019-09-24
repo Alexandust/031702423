@@ -52,7 +52,7 @@ def getcity(d):   #从信息中读取城市名
     return cityname.group(0)
 
 def getarea(d):            #从信息中读取县、区名
-    areaname = re.search("(.*?[县])|(.*?[区])", d)
+    areaname = re.search("(.*?县)|(.*?区)", d)
     if areaname == None:
         #print("_____________________")
         for i in infor:
@@ -74,7 +74,7 @@ def getroad(d): #从信息中读取街、道、路名
     return roadname.group(0)
 
 def getnumber(d):                #从信息中读取住户门牌号
-    dnumber = re.search("(.*?[号])", d)
+    dnumber = re.search("(.*?号)", d)
     if dnumber == None:
         return ""
     return dnumber.group(0)
@@ -146,8 +146,7 @@ def main():
     number=getnumber(data)
     data2 = data2.replace(number, "", 1)
     re.number=number
-    data3=data2.split("号")
-    re.information=data3[1]
+    re.information=data2
     if datajudge =="1":
         something["地址"] = [re.province, re.city, re.area, re.town, re.detail]
     else:
