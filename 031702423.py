@@ -62,7 +62,7 @@ def getarea(d):            #从信息中读取县、区名
     return areaname.group(0)
 
 def gettown(d):         #从信息中读取镇、乡名
-    tname = re.search("(.*?镇|乡|街道),", d)
+    tname = re.search("(.*?镇)|(.*?乡)|(.*?街道)", d)
     if tname == None:
         return ""
     return tname.group(0)
@@ -133,20 +133,16 @@ def main():
             city = city + "市"
     re.city=city
     area=getarea(data2)
-    if area != "":
-        L = len(area)
-        if area[-1] == data2[L - 1]:
-            data2 = data2.replace(area, "", 1)
-        else:
-            data2 = data2.replace(area[:-1], "", 1)
+
     re.area=area
     town=gettown(data2)
     data2 = data2.replace(town, "", 1)
     re.town=town
-    datadetail=data2
-    re.detail=datadetail
+    re.detail=data2
+
     road=getroad(data2)
     data2 = data2.replace(road, "", 1)
+
     number=getnumber(data)
     data2 = data2.replace(number, "", 1)
     re.number=number
