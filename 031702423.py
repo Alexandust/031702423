@@ -12,19 +12,18 @@ class resolution:
     phone=""
     detail=""
     information=""
+def phonenumber(data):
+    pn0=re.search(r'\d{7,12}',data)
+    if pn0 == None:
+        return ""
+    return pn0.group(0)
 def level(data):
     l=data.split("!")
     return l
 def getname(data):
     n=data.split(",")
     return n
-def phonenumber(data):
-    way=re.compile(r'\d{7,12}')
-    pn0=way.search(data)
-    pn=pn0.group(0)
-    if pn0 == None:
-        return ""
-    return pn
+
 def getpalityandprovince(data): #判断直辖市
     name=re.search(("(.*?省)|(.*?自治区)|(.*?北京市)|(.*?上海市)|(.*?天津市)|(.*?重庆市)"), data)
     if name != None:
@@ -63,13 +62,13 @@ def getarea(data):            #从信息中读取县、区名
     return areaname.group(0)
 
 def gettown(data):         #从信息中读取镇、乡名
-    tname = re.search("(.*?[镇])|(.*?[乡]),", data)
+    tname = re.search("(.*?镇|乡|街道),", data)
     if tname == None:
         return ""
     return tname.group(0)
 
 def getroad(data): #从信息中读取街、道、路名
-    roadname = re.search("(.*?[街])|(.*?[道])|(.*?[路])", data)
+    roadname = re.search("(.*?路|街|道|巷)", data)
     if roadname == None:
         return ""
     return roadname.group(0)
@@ -90,19 +89,16 @@ def main():
     }
     re = resolution()
     data=input()
-    lev=level(data)
-    urlevel=lev[0]
-    data=lev[1] #更新为分割出难度的数据
-    ming=getname(data)
-    name1=ming[0]
-    re.name=name1
-    something["姓名"]=re.name
-    phone=phonenumber(data)
-    re.phone=phone
-    something["手机"] = re.phone
     datajudge=data[0]
     data1=getname(data)
     data2=data1[1]
+
+    name1=data1[0]
+    re.name=name1
+    something["姓名"]=re.name
+    phone=phonenumber(data2)
+    re.phone=phone
+    something["手机"] = re.phone
     province=getpalityandprovince(data2)
     if province in ('北京市', '上海市', '天津市', '重庆市'):#直辖市的话直接跳过市级和县级
         province = province[0:2]
