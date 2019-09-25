@@ -44,8 +44,8 @@ def getpalityandprovince(d): #判断直辖市
         else:
             return d[0:2]
     return name.group(0)
-def getcity(d):   #从信息中读取城市名
-    cityname = re.search("(.*?[市])", d)
+def getcity(d):   #从信息中读取城市名或是自治州名
+    cityname = re.search("(.*?市)|(.*?自治州)", d)
     if cityname != None:
         l = len(cityname.group(0))
     if cityname == None or l > 7:
@@ -55,8 +55,8 @@ def getcity(d):   #从信息中读取城市名
         return ""
     return cityname.group(0)
 
-def getarea(d):            #从信息中读取县、区名
-    areaname = re.search("(.*?[县])|(.*?[区])", d)
+def getarea(d):            #从信息中读取县、区、旗名
+    areaname = re.search("(.*?县)|(.*?区)|(.*?旗)|(.*?自治旗)|(.*?自治县)", d)
     if areaname == None:
         for i in infor:
             if d[0:2] in i:
@@ -65,7 +65,7 @@ def getarea(d):            #从信息中读取县、区名
     return areaname.group(0)
 
 def gettown(d):         #从信息中读取镇、乡名
-    tname = re.search("(.*?[镇])|(.*?[乡])|(.*?街道)", d)
+    tname = re.search("(.*?[镇])|(.*?[乡])|(.*?街道)|(.*?民族乡)", d)
     if tname == None:
         return ""
     return tname.group(0)
