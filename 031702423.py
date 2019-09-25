@@ -43,7 +43,7 @@ def getcity(d):   #从信息中读取城市名或是自治州名
     return cityname.group(0)
 
 def getarea(d):            #从信息中读取县、区、旗名
-    areaname = re.search("(.*?县)|(.*?区)|(.*?旗)|(.*?自治旗)|(.*?自治县)|(.*?委员会)|(.*?开发区)", d)
+    areaname = re.search("(.*?县)|(.*?区)|(.*?旗)|(.*?自治旗)|(.*?自治县)|(.*?委员会)|(.*?开发区)|(.*?市)", d)
     if areaname == None:
         for i in infor:
             if d[0:2] in i:
