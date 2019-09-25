@@ -29,11 +29,6 @@ def getpalityandprovince(d): #判断直辖市
     if name != None:
         l = len(name.group(0))
     if name == None or l > 5:
-        if d[0:3] == "内蒙古":
-            return "内蒙古"
-        if d[0:3] == "黑龙江":
-            return "黑龙江"
-        else:
             return d[0:2]
     return name.group(0)
 def getcity(d):   #从信息中读取城市名或是自治州名
