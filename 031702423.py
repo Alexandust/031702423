@@ -71,7 +71,7 @@ def gettown(d):         #从信息中读取镇、乡名
     return tname.group(0)
 
 def getroad(d): #从信息中读取街、道、路名
-    roadname = re.search("(.*?[街])|(.*?[道])|(.*?[路])|(.*?[巷])|(.*?大街)|(.*?街道)", d)
+    roadname = re.search("(.*?[街])|(.*?[道])|(.*?[路])|(.*?[巷])|(.*?大街)|(.*?街道)|(.*?大道)", d)
     if roadname == None:
         return ""
     return roadname.group(0)
