@@ -35,8 +35,8 @@ def getpalityandprovince(d): #判断直辖市
             return "内蒙古"
         if d[0:3] == "广西壮族":
             return "广西壮族"
-        if d[0:3] == "内蒙古":
-            return "内蒙古"
+        if d[0:3] == "西藏":
+            return "西藏"
         else:
             return d[0:2]
     return name.group(0)
