@@ -84,15 +84,19 @@ def main():
     re = resolution()
     data=input()
     lev=level(data)
-    data=data[2:] #更新为分割出难度的数据,即真数据
+    data=lev[1] #更新为分割出难度的数据,即真数据
+    
     data1=getname(data)
     name1=data1[0]
     re.name=name1
     something["姓名"]=re.name
+    
     phone=phonenumber(data)
     re.phone=phone
     something["手机"] = re.phone
+    
     datajudge=lev[0] #把分割出的难度系数当作输出评判标准
+    
     data2=data1[1]
     data2 = data2.replace(re.phone, "", 1)
     data2 = data2.replace(".", "", 1)
