@@ -84,7 +84,7 @@ def main():
     re = resolution()
     data=input()
     lev=level(data)
-    data=lev[1] #更新为分割出难度的数据,即真数据
+    data=data[2:] #更新为分割出难度的数据,即真数据
     data1=getname(data)
     name1=data1[0]
     re.name=name1
