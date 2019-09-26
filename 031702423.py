@@ -12,25 +12,29 @@ class resolution:
     phone=""
     detail=""
     information=""
+    
 def phonenumber(d):
     pn0=re.search(r'\d{7,12}',d)
     if pn0 == None:
         return ""
     return pn0.group(0)
+
 def level(d):
     l=d.split("!")
     return l
+
 def getname(d):
     n=d.split(",")
     return n
 
-def getpalityandprovince(d): #判断直辖市
+def getpalityandprovince(d): #从信息中读取省名或是自治区名或是直辖市名
     name=re.search(("(.*?省)|(.*?自治区)|(.*?北京市)|(.*?上海市)|(.*?天津市)|(.*?重庆市)"), d)
     if name != None:
         l = len(name.group(0))
     if name == None or l > 5:
             return d[0:2]
     return name.group(0)
+
 def getcity(d):   #从信息中读取城市名或是自治州名
     cityname = re.search("(.*?市)|(.*?自治州)", d)
     if cityname != None:
@@ -139,6 +143,7 @@ def main():
     data2 = data2.replace(number, "", 1)
     re.number=number
     re.information=data2
+    
     if datajudge =="1":#难度系数为1，输出到乡镇，剩下的当细节放到最后一个；否则的话，一路细分到门牌号
         something["地址"] = [re.province, re.city, re.area, re.town, re.detail]
     else:
