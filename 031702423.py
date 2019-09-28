@@ -88,7 +88,7 @@ def main():
         if(data=="END"):
             break
     except EOFError:
-        break;
+        break
     lev=level(data)
     data=lev[1] #更新为分割出难度的数据,即真数据
     
