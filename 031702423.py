@@ -329,10 +329,8 @@ def main():
             data = input()
             if (data == "END"):
                 break
-            except EOFError:
-                break
-
-
+        except EOFError as e:
+            break
             lev = level(data)
             data = lev[1]  # 更新为分割出难度的数据,即真数据
 
