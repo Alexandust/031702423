@@ -82,7 +82,13 @@ def main():
         "地址": []
     }
     re = resolution()
-    data=input()
+    while 1:
+    try:
+        data=input();
+        if(data=="END"):
+            break
+    except EOFError:
+        break;
     lev=level(data)
     data=lev[1] #更新为分割出难度的数据,即真数据
     
