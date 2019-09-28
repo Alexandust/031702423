@@ -329,8 +329,6 @@ def main():
             data = input()
             if (data == "END"):
                 break
-        except EOFError as e:
-            break
             lev = level(data)
             data = lev[1]  # 更新为分割出难度的数据,即真数据
 
@@ -402,4 +400,7 @@ def main():
                 something["地址"] = [re.province, re.city, re.area, re.town, re.road, re.number, re.information]
             json_str = json.dumps(something, ensure_ascii=False)
             print(json_str)
+
+        except EOFError as e:
+            break
 main()
